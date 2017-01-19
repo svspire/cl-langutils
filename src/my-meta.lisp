@@ -110,6 +110,12 @@
     char
     form)
 
+#+OPENMCL
+(defmethod make-load-form ((self meta) &optional environment)
+  (make-load-form-saving-slots self
+                               :slot-names '(char form)
+                               :environment environment))
+
 (defun symbol-name-equal (src target &key key (test #'equal))
   (funcall test (symbol-name src) (symbol-name (if key (funcall key target) target))))
 
@@ -202,10 +208,10 @@
        ,@body)))
 
 (defun enable-meta-syntax ()
-	(copy-readtable *meta-readtable* *readtable*))
+	(setf *readtable* *meta-readtable*))
 
 (defun disable-meta-syntax()
-	(copy-readtable *saved-readtable* *readtable*))
+	(setf *readtable* *saved-readtable*))
 
 (provide 'meta)
 

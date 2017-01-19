@@ -69,7 +69,8 @@
 ;;
 
 ;; Reads a stream into a string
-#.(enable-meta-syntax)
+(eval-when (:load-toplevel :compile-toplevel)
+  (enable-meta-syntax))
 
 (let* ((length 1024)
        (result (make-array length :element-type 'character :adjustable t)))
@@ -301,7 +302,8 @@
 	  ))))
 ;;end
 
-#.(disable-meta-syntax)
+(eval-when (:load-toplevel :compile-toplevel)
+  (disable-meta-syntax))
 
 (defun tokenize-string (string)
   "Returns a fresh, linguistically tokenized string"
